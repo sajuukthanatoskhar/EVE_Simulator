@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package SpaceStations {
+    class Citadel{
+    population : int
+    has_market : int
+    market : MarketPlace
+
+    }
+    class MarketPlace
+    {
+    orders : list[MarketOrder]
+    }
+
+    Citadel "If\n has_market\n == True" -- MarketPlace
+
+}
+
+
+
+package EconomicEntities {
+
+    MarketPlace -- MarketOrder
+    class MarketOrder{
+    }
+}
+@enduml

@@ -1,0 +1,2 @@
+TIME_CONSTANT = 1/24
+
