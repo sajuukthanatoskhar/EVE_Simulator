@@ -7,7 +7,7 @@ from components.sim_constants import TIME_CONSTANT
 class StarSystem:
 
 
-    def __init__(self, name, star_system_links : set[StarSystem]= []):
+    def __init__(self, name, star_system_links : set[StarSystem]= set([])):
         self.name = name
         self.star_system_links : set[StarSystem] = star_system_links
         self.planets = set()
@@ -25,10 +25,13 @@ class StarSystem:
 
 class Planet:
 
-    def __init__(self, location : StarSystem, produces = "Metals"):
+    def __init__(self, location : StarSystem, produces : str = "Metals"):
         self.location : StarSystem = location
-
+        if not isinstance(self.location, StarSystem):
+            raise TypeError(f"Starsystem {StarSystem} is not of type Starsystem!")
         self.name = f"{self.location.name}-P{len(self.location.planets) + 1}"
+
+
         self.productionoutput = produces
 
 

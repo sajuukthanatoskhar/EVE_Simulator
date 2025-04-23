@@ -13,6 +13,15 @@ class Commodity:
     name : str
     quantity : int
 
+@dataclasses.dataclass
+class HarvestedCommodity(Commodity):
+    pass
+
+
+
+class ProducedCommodity(Commodity):
+    requiredCommodities = []
+
 class PI_Colony:
     def __init__(self, env : simpy.Environment, planet):
         self.env = env
@@ -22,7 +31,17 @@ class PI_Colony:
         self.currentoutput : float = np.random.randint(2500,5000)/TIME_CONSTANT
         self.produces = self.planet.productionoutput
 
-
+    def set_output_rate_pi_colony(self, minrate, maxrate):
+        """
+        Sets teh output rate
+        :param minrate:
+        :param maxrate:
+        :return:
+        """
+        if isinstance(minrate, float) and isinstance(maxrate, float):
+            self.currentoutput = np.random.randint(minrate, maxrate)/TIME_CONSTANT
+        else:
+            raise TypeError('Invalid Types')
 
     def get_output_from_planet(self):
         self.storage.put(self.currentoutput)
