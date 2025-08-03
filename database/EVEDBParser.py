@@ -110,7 +110,7 @@ class EVE_DB:
         pass
 
     def get_item_name_and_id(self, typeid) -> Tuple[str, int]:
-        pass
+        return name,typeid
 
     def get_requisite_items(self, typeid) -> list[dict]:
         pass

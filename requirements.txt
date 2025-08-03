@@ -1,0 +1,6 @@
+pytest~=8.4.0
+simpy~=4.1.1
+matplotlib~=3.10.5
+numpy~=2.2.5
+SQLAlchemy~=2.0.40
+pandas~=2.2.3
