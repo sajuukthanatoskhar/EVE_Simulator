@@ -1,4 +1,4 @@
-
+from typing import List
 
 import simpy
 import numpy as np
@@ -22,12 +22,12 @@ class Citadel:
 
 
     def __init__(self, env : simpy.Environment, pop : int = 100, has_market : bool = True, name = "A Station"):
-        self.has_market = has_market
-        self.pop = pop
-        self.env = env
-        self.name = name
-        self.pop_history = []
-        self.location = None
+        self.has_market : bool = has_market
+        self.pop : int = pop
+        self.env : simpy.Environment = env
+        self.name : str = name
+        self.pop_history : List[int] = []
+        self.location : StarSystem|None = None
         if self.has_market:
             self.market = Marketplace()
 

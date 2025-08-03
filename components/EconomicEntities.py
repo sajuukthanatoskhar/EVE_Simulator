@@ -1,6 +1,7 @@
 import dataclasses
 
 import simpy
+from simpy.resources import container
 
 
 import numpy as np
@@ -52,22 +53,19 @@ class PI_Colony:
         self.storage.get(self.storage.level)
         return commodity_to_get
 
-@dataclasses.dataclass
-class MarketOrder:
+class MarketOrder(container.Container):
 
-    name : str
-    qty : int
-    owner : str
-    price : float
-    time_placed : float
-
-    def __post_init__(self):
-        self.init_qty = self.qty
+    def __init__(self, env: simpy.Environment, name, qty, owner="An Owner", price=1.00, time_placed = None):
+        super().__init__(env, init=qty)
+        self.name : str = name
+        self.init_qty : int = qty
+        self.owner : str = owner
+        self.price : float = price
+        self.time_placed : float = env.now if not time_placed else time_placed
 
 
 
-
-    def create_marketorder(self, name, qty, owner, price, env : simpy.Environment):
+    def create_marketorder(self,env : simpy.Environment, name, qty, owner, price, ):
         """
         Factory method
         :param name: Name of item being sold
@@ -76,4 +74,21 @@ class MarketOrder:
         :param env:
         :return:
         """
-        return MarketOrder(name, qty, owner, price, env.now)
+        return MarketOrder(env, name, qty, owner, price, env.now)
+
+
+# def run_example(env : simpy.Environment, market_order: MarketOrder):
+#     while(market_order.level > 0):
+#         market_order.get(500)
+#         print(f"{market_order.name} {market_order.level}")
+#         yield env.timeout(1)
+#
+#
+#
+# if __name__ == '__main__':
+#     env = simpy.Environment()
+#
+#     a_Market_order = MarketOrder(env,"Tritanium", 5000, "Owner", 1.5)
+#     env.process(run_example(env, a_Market_order))
+#     #print(a_Market_order.get(2000))
+#     env.run()

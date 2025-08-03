@@ -6,8 +6,11 @@ import simpy
 
 import numpy as np
 
+from components.AccountingComponents import PlayerWallet
 from components.EconomicEntities import PI_Colony, Commodity
 from components.sim_constants import TIME_CONSTANT
+
+STARTING_PLAYER_CASH = 50000000
 
 pilot_activity_list = ['Mining','PvP','PI', '"Industry"', 'Ship Spinning']
 
@@ -51,11 +54,15 @@ class PI_ColonyManager:
 
 class Player:
 
-    def __init__(self, env, name ,  timezone : Timezone, current_alliance: Alliance):
+    def __init__(self, env, name, timezone : Timezone, current_alliance: Alliance, starting_cash =STARTING_PLAYER_CASH):
         self.name = name
         self.timezone = timezone
         self.env  : simpy.Environment = env
         self.current_alliance : Alliance = current_alliance
+
+        self.Wallet = PlayerWallet(starting_cash)
+        if starting_cash > 0:
+            self.Wallet.make_payment_to("GodEntity", self.name, starting_cash, "Initial Payment", 1)
 
         self.pi_colonymanager = PI_ColonyManager(no_of_colonies = np.random.randint(0,6))
         self.current_activity = 'idle'
