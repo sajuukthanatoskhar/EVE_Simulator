@@ -10,6 +10,8 @@ from components.AccountingComponents import PlayerWallet
 from components.EconomicEntities import PI_Colony, Commodity
 from components.sim_constants import TIME_CONSTANT
 
+DEFAULT_PILOT_PROPENSITY = (1, 5, 3, 1, 2)
+
 STARTING_PLAYER_CASH = 50000000
 
 pilot_activity_list = ['Mining','PvP','PI', '"Industry"', 'Ship Spinning']
@@ -54,7 +56,7 @@ class PI_ColonyManager:
 
 class Player:
 
-    def __init__(self, env, name, timezone : Timezone, current_alliance: Alliance, starting_cash =STARTING_PLAYER_CASH):
+    def __init__(self, env, name, timezone : Timezone, current_alliance: Alliance, starting_cash =STARTING_PLAYER_CASH, propensity : tuple[int, int,int,int,int] = DEFAULT_PILOT_PROPENSITY):
         self.name = name
         self.timezone = timezone
         self.env  : simpy.Environment = env
@@ -68,7 +70,7 @@ class Player:
         self.current_activity = 'idle'
 
         self.do_activities = self.env.process(self.do_activities_process())
-        self.propensity = (1, 5, 3, 1,2)
+        self.propensity = propensity
 
     def set_pilot_activity_propensity(self, propensitytuple : tuple):
         self.propensity = propensitytuple
@@ -111,3 +113,5 @@ class Player:
 
     def do_activity(self):
         self.current_activity = random.choices(pilot_activity_list, self.propensity, k=1)[0]
+
+

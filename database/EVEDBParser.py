@@ -110,7 +110,8 @@ class EVE_DB:
         pass
 
     def get_item_name_and_id(self, typeid) -> Tuple[str, int]:
-        return name,typeid
+
+        return self.get_name_from_typeid(typeid),typeid
 
     def get_requisite_items(self, typeid) -> list[dict]:
         pass
@@ -125,3 +126,4 @@ if __name__ == '__main__':
         print(a_db.get_name_from_typeid(22456)) # Should be Sabre # TODO: Write Test
         print(a_db.get_eve_run_output(sabre_typeid)) # Should be 1
         print(a_db.get_requisite_items(sabre_typeid)) # Should be a list of keys/values
+        print(a_db.get_item_name_and_id(22456))

@@ -18,6 +18,11 @@ class Marketplace:
     def add_order(self, an_order : MarketOrder):
         self.orders
 
+class StationMarketPlace(Marketplace):
+    def __init__(self):
+        super().__init__()
+
+
 class Citadel:
 
 
